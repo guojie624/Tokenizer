@@ -1,0 +1,51 @@
+def identifier(variable):
+  #check if identifier condition if its length is equal 1
+  if len(variable) == 1:
+    if variable.isalpha() or variable == '_':
+      return True
+    else:
+      return False
+  #check identifier contion when its length is more than 1
+  else: 
+  # the first char of a identifier have to start with char or _
+    if variable[0].isalpha() or variable[0] == '_':
+      for x in variable[1:]:
+        if x.isalpha() or x.isdigit() or x == '_':
+          return True
+        else:
+          return False
+          break
+    else:
+      return False  
+def main():
+  #ask for test sentence
+  sentence = input ("Enter a string: ")
+  #check if assignments are complete
+  if sentence.count('=') == sentence.count(';'):
+  #spilit assignments by ';' 
+    substrings = sentence.split(';')
+    substrings.remove('')
+  #create a dictionary to store values
+    dic = {}
+    for assignments in substrings:
+  #split assignment by '='
+      units = assignments.split('=')
+      variable = units [0]
+      value = units [1]
+      if identifier(variable):
+        try:
+        #evaluate values
+          x = eval(value,dic)
+          dic[variable] = x
+        except Exception:
+          print("error")
+      else:
+        print("error")
+    dic.pop("__builtins__")
+  #print out results
+    for x in dic:
+      print(x,'=',dic[x])
+  else:
+    print('error')
+  
+main()
